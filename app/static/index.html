@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ticketwise — Support Intelligence</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="paper-grain"></div>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">t.</span><span>ticketwise<small>SUPPORT INTELLIGENCE</small></span></a>
+    <nav><a href="#classifier">Classifier</a><a href="#how-it-works">How it works</a><a href="#model-health">Model health</a></nav>
+    <span class="live"><i></i> LOCAL DEMO</span>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">A CALMER SUPPORT QUEUE</p>
+        <h1>Every ticket.<br><em>In the right hands.</em></h1>
+        <p class="hero-text">Turn incoming support messages into actionable categories and priorities. Review predictions, understand the signals, and improve the model with feedback.</p>
+        <a class="text-link" href="#classifier">Classify a ticket <span>↘</span></a>
+      </div>
+      <div class="hero-note">
+        <div class="note-top"><span>FIELD NOTE 01</span><span>✳</span></div>
+        <div class="note-quote">“The fastest response starts with knowing what matters most.”</div>
+        <div class="note-foot"><span>TRIAGE PRINCIPLE</span><span>01 / 03</span></div>
+        <div class="sun-stamp">TW</div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Project summary">
+      <article><span class="stat-label">TICKET CATEGORIES</span><strong>06</strong><small>Intent groups</small></article>
+      <article><span class="stat-label">PRIORITY LEVELS</span><strong>03</strong><small>Low · Medium · High</small></article>
+      <article><span class="stat-label">MODEL APPROACH</span><strong>TF-IDF</strong><small>+ Logistic Regression</small></article>
+      <article><span class="stat-label">DATA PRIVACY</span><strong>Local</strong><small>Demo runs on your machine</small></article>
+    </section>
+
+    <section id="classifier" class="workspace">
+      <div class="section-heading">
+        <div><p class="eyebrow">01 / TICKET TRIAGE</p><h2>What came into the queue?</h2></div>
+        <span class="section-tag">PREDICT · REVIEW · IMPROVE</span>
+      </div>
+      <div class="work-grid">
+        <article class="input-panel">
+          <label for="ticketText">TICKET MESSAGE <span>Required</span></label>
+          <textarea id="ticketText" maxlength="5000" placeholder="Example: Our team cannot sign in after the latest update and password reset emails never arrive. This is blocking our work…"></textarea>
+          <div class="input-foot"><span id="charCount">0 / 5000 characters</span><button id="exampleBtn" class="quiet-button">Use an example ↗</button></div>
+          <button id="classifyBtn" class="primary-button">Classify ticket <span>→</span></button>
+          <p class="privacy-note">✳ Demo only: use synthetic or non-sensitive ticket text.</p>
+        </article>
+        <article class="result-panel" id="resultPanel">
+          <div class="result-empty" id="emptyState"><span class="empty-icon">✳</span><p class="eyebrow">YOUR RESULT WILL APPEAR HERE</p><h3>Clarity before urgency.</h3><p>Enter a support message and classify it to see a predicted category, priority, confidence, and useful keywords.</p></div>
+          <div id="resultContent" hidden>
+            <div class="result-head"><span class="eyebrow">PREDICTION RESULT</span><span id="reviewBadge" class="status-badge">MODEL OUTPUT</span></div>
+            <p class="result-label">SUGGESTED CATEGORY</p><h3 id="categoryValue">—</h3>
+            <div class="confidence-row"><span>Category confidence</span><strong id="categoryConfidence">—</strong></div>
+            <div class="meter"><span id="categoryMeter"></span></div>
+            <div class="priority-block"><div><p class="result-label">SUGGESTED PRIORITY</p><strong id="priorityValue" class="priority-value">—</strong></div><div class="priority-score"><span>Confidence</span><strong id="priorityConfidence">—</strong></div></div>
+            <div class="keywords-block"><p class="result-label">SIGNAL WORDS</p><div id="keywords" class="chips"></div></div>
+            <div id="reviewMessage" class="review-message" hidden></div>
+            <div class="feedback-box">
+              <p class="result-label">WAS THIS CORRECT?</p>
+              <div class="feedback-grid">
+                <label>Correct category<select id="correctCategory"></select></label>
+                <label>Correct priority<select id="correctPriority"><option>low</option><option>medium</option><option>high</option></select></label>
+              </div>
+              <button id="feedbackBtn" class="secondary-button">Save correction ↗</button>
+              <p id="feedbackMessage" class="feedback-message" role="status"></p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="how-it-works" class="how-section">
+      <div class="section-heading"><div><p class="eyebrow">02 / UNDER THE SURFACE</p><h2>Simple, explainable building blocks.</h2></div><p class="heading-note">A practical NLP workflow built for learning and demonstration.</p></div>
+      <div class="steps">
+        <article><span class="step-num">01</span><h3>Read the text</h3><p>TF-IDF transforms ticket wording into weighted word and phrase features.</p><span class="step-tag">TEXT FEATURES</span></article>
+        <article><span class="step-num">02</span><h3>Predict intent</h3><p>Separate logistic-regression models estimate the category and priority.</p><span class="step-tag">CLASSIFICATION</span></article>
+        <article><span class="step-num">03</span><h3>Check confidence</h3><p>Low-confidence results are flagged for human review instead of treated as facts.</p><span class="step-tag">HUMAN IN THE LOOP</span></article>
+        <article><span class="step-num">04</span><h3>Learn from feedback</h3><p>Corrections are saved locally and can be included when models are retrained.</p><span class="step-tag">FEEDBACK LOOP</span></article>
+      </div>
+    </section>
+
+    <section id="model-health" class="health-section">
+      <div class="health-copy"><p class="eyebrow">03 / MODEL HEALTH</p><h2>Measure it.<br><em>Don't just assume.</em></h2><p>Metrics are evaluated on held-out synthetic examples. They are useful for a project demo, not a promise of performance on real customer tickets.</p><button id="retrainBtn" class="secondary-button">Retrain with feedback ↻</button><p id="retrainMessage" class="feedback-message" role="status"></p></div>
+      <div class="metrics-card"><div class="metrics-head"><span>MODEL EVALUATION</span><span class="mini-dot"></span></div><div class="metric-line"><span>Category accuracy</span><strong id="catMetric">—</strong></div><div class="metric-line"><span>Priority accuracy</span><strong id="priMetric">—</strong></div><div class="metric-line"><span>Priority macro F1</span><strong id="f1Metric">—</strong></div><div class="metric-line"><span>Training examples</span><strong id="examplesMetric">—</strong></div><p class="metric-foot" id="metricNote">Loading model metrics…</p></div>
+    </section>
+    <footer><a class="brand footer-brand" href="/"><span class="brand-mark">t.</span><span>ticketwise<small>SUPPORT INTELLIGENCE</small></span></a><p>Built as an educational NLP project · Synthetic data only</p><span>FASTAPI + SCIKIT-LEARN</span></footer>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
